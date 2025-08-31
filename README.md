@@ -60,3 +60,16 @@ UI/UX: The interface should be minimal and optimized for speed and single-hand u
 Data Structure: You'll need a simple data model to store player names and their performance stats (runs, balls faced, wickets, catches, run outs, etc.).
 
 No Extras: As per your request, the app should not include options for 'wide' or 'no ball' extras. This keeps the logic simple.
+#Screen 1
+Create Match ( Match Title & Select Day)
+#Screen 2
+Create a Team (Team Name & Team Icon)
+#Screen 3
+Add Player into Team
+#Screen 4:
+Select No Of Overs Match:
+Over all Team score display Run and Over along with Strike Rate.
+On the Top Balls comes.Each Ball user can select the Run (0,1,2,3,4,6,Wicket). Before the Update the Run Can select the Player who is playing the ball.
+Underlay App manage the How many Runs player score including information how many 4 & 6. 
+Team player have radio button a time only one player can active. before start score active 2 player out of team.
+At the bottom End Match Button. Now Redirect to next activity Scoreboard where along with heading like player name, Runs,balls, 4s, & 6s display the runs
