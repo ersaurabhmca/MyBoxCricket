@@ -45,13 +45,13 @@ class LiveScoringAdapter(
         holder.stats.text = "Runs: ${player.runs} | Balls: ${player.ballsFaced} | Out: ${if (player.isOut) "Yes" else "No"}\n" +
             "Catches: ${player.catches} | Run Outs: ${player.runOuts}"
 
-        // Batting buttons with confirmation
-        holder.btnRun0.setOnClickListener { confirmAndScore(holder, position, 0) }
-        holder.btnRun1.setOnClickListener { confirmAndScore(holder, position, 1) }
-        holder.btnRun2.setOnClickListener { confirmAndScore(holder, position, 2) }
-        holder.btnRun3.setOnClickListener { confirmAndScore(holder, position, 3) }
-        holder.btnRun4.setOnClickListener { confirmAndScore(holder, position, 4, isFour = true) }
-        holder.btnRun6.setOnClickListener { confirmAndScore(holder, position, 6, isSix = true) }
+        // Batting buttons without confirmation
+        holder.btnRun0.setOnClickListener { scoreRun(holder, position, 0) }
+        holder.btnRun1.setOnClickListener { scoreRun(holder, position, 1) }
+        holder.btnRun2.setOnClickListener { scoreRun(holder, position, 2) }
+        holder.btnRun3.setOnClickListener { scoreRun(holder, position, 3) }
+        holder.btnRun4.setOnClickListener { scoreRun(holder, position, 4, isFour = true) }
+        holder.btnRun6.setOnClickListener { scoreRun(holder, position, 6, isSix = true) }
         holder.btnWicket.setOnClickListener { confirmAndWicket(holder, position) }
 
         // Fielding buttons with confirmation
@@ -59,21 +59,15 @@ class LiveScoringAdapter(
         holder.btnRunOut.setOnClickListener { confirmAndFielding(holder, position, isRunOut = true) }
     }
 
-    private fun confirmAndScore(holder: PlayerViewHolder, position: Int, run: Int, isFour: Boolean = false, isSix: Boolean = false) {
-        val context = holder.itemView.context
-        android.app.AlertDialog.Builder(context)
-            .setTitle("Confirm Score")
-            .setMessage("Add $run run${if (isFour) ", 4" else ""}${if (isSix) ", 6" else ""} to ${players[position].playerInfo.name}?")
-            .setPositiveButton("Yes") { _, _ ->
-                players[position].runs += run
-                players[position].ballsFaced++
-                if (isFour) players[position].fours++
-                if (isSix) players[position].sixes++
-                notifyItemChanged(position)
-                onScoreChanged()
-            }
-            .setNegativeButton("No", null)
-            .show()
+    private fun scoreRun(holder: PlayerViewHolder, position: Int, run: Int, isFour: Boolean = false, isSix: Boolean = false) {
+        // Validation: Do not update runs if player is out
+        if (players[position].isOut) return
+        players[position].runs += run
+        players[position].ballsFaced++
+        if (isFour) players[position].fours++
+        if (isSix) players[position].sixes++
+        notifyItemChanged(position)
+        onScoreChanged()
     }
 
     private fun confirmAndWicket(holder: PlayerViewHolder, position: Int) {

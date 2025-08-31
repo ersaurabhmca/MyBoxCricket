@@ -109,10 +109,10 @@ class PlayerAdapter(
 ) : RecyclerView.Adapter<PlayerAdapter.PlayerViewHolder>() {
     class PlayerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameInput: EditText = view.findViewById(R.id.player_name_input)
-        val removeButton: Button = view.findViewById(R.id.remove_button)
-        val editButton: Button = view.findViewById(R.id.edit_button)
+        val editIcon: ImageView = view.findViewById(R.id.edit_icon)
+        val deleteIcon: ImageView = view.findViewById(R.id.delete_icon)
+        val updateIcon: ImageView = view.findViewById(R.id.update_icon)
         val photoView: ImageView = view.findViewById(R.id.player_photo)
-        val changePhotoButton: Button = view.findViewById(R.id.change_photo_button)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
@@ -130,13 +130,17 @@ class PlayerAdapter(
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
-        holder.removeButton.setOnClickListener {
+        holder.deleteIcon.setOnClickListener {
             onRemove(holder.adapterPosition)
         }
-        holder.editButton.setOnClickListener {
+        holder.editIcon.setOnClickListener {
             onEdit(holder.adapterPosition)
         }
-        holder.changePhotoButton.setOnClickListener {
+        holder.updateIcon.setOnClickListener {
+            // You can use this for a custom update action if needed
+            onEdit(holder.adapterPosition)
+        }
+        holder.photoView.setOnClickListener {
             onChangePhoto(holder.adapterPosition)
         }
         if (player.photoUri != null) {
